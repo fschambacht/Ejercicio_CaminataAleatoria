@@ -1,9 +1,10 @@
-let data_label = 0
+// global variables
 let data_set_array = []
-let iterations_number = 5
+let number = 0
 
-const bet = () => {
-  let probability = 0.29
+// function to simulate a win or lose of the bet
+const bet = () => { 
+  let probability = document.getElementById('probability').value
   let y_data = []
   let y_point = 20
 
@@ -19,7 +20,9 @@ const bet = () => {
   return y_data
 }
 
-const data_set = (number) => {
+// function to set the dataset of a chart
+const data_set = () => {
+  number++
   let color = `rgb(${Math.random()*256},${Math.random()*256},${Math.random()*256})`
   return {
     label: `Experiment ${number}`,
@@ -29,24 +32,53 @@ const data_set = (number) => {
   }
 }
 
-for (let i = 0; i < iterations_number; i++){
-  let data = data_set(i+1)
-  data_set_array.push(data)
-}
+// function to render the x axis in chart
+const moments = () => {
+  let moment = []
+  let data_label = 0
 
-for (let i = 0; i < iterations_number; i++){
-  if (data_set_array[i].data.length > data_label){
-    data_label = data_set_array[i].data.length
+  for (let i = 0; i < data_set_array.length; i++){
+    if (data_set_array[i].data.length > data_label){
+      data_label = data_set_array[i].data.length
+    }
   }
+
+  for (let i = 0; i < data_label; i++) {
+    moment.push(`moment ${i}`)
+  }
+  return moment
 }
 
-let moment = []
-for (let i = 0; i < data_label; i++) {
-  moment.push(`moment ${i}`)
+// function to add a new simulation in chart
+const updateChart = () => {
+  let probability = document.getElementById('probability').value
+  if (probability == '') {
+    return alert('Probability cant be empty')
+  }
+
+  myChart.data.datasets.push(data_set())
+  myChart.data.labels = moments()
+
+  myChart.update()
 }
 
+// function to clear chart 
+const clearChart = () => {
+
+  while(data_set_array.length > 0) {
+      data_set_array.pop();
+  }
+
+  myChart.data.labels = moments()
+
+  myChart.update()
+
+  number = 0
+}
+
+// data and config of chart 
 const data = {
-  labels: moment,
+  labels: moments(),
   datasets: data_set_array
 };
 
@@ -54,9 +86,10 @@ const config = {
     type: 'line',
     data: data,
     options: {}
-  };
+};
 
 const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
+  document.getElementById('myChart'),
+  config
+);
+

@@ -3,13 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta n me="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicio_CaminataAleatoria</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <canvas id="myChart"></canvas>
-    </div>
+    <header>
+        <h1 class="title">Randomness Simulation</h1>
+    </header>
+    <main>
+        <img class="image-left" src="./undraw_dashboard_re_3b76.svg">
+        <img class="image-right" src="./undraw_visual_data_re_mxxo.svg">
+        <div class="setup-container">
+            <label class="setup-label">Enter probability</label>
+            <input id="probability" class="setup-input" type="number">
+            <button class="button" type="button" onclick="updateChart()">Add Experiment</button>
+            <button class="button" type="submit" onclick="clearChart()">Clear</button>
+        </div>
+        <div class="canvas-container">
+            <canvas id="myChart"></canvas>
+        </div>
+    </main>
+    <footer>
+    </footer>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./index.js"></script>
 </body>
